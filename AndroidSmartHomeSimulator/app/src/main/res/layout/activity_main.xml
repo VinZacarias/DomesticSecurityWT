@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlmain"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/imgKITCHEN"
+        android:text="Kitchen"
+        android:gravity="center_horizontal|center"
+        android:textAlignment="center"
+        android:layout_width = "536dp"
+        android:layout_height="164dp"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/ic_lugares2_kitchen"
+        android:tag="imgKITCHEN"
+        />
+    <TextView
+        android:id="@+id/imgLIVINGROOM"
+        android:text="LivingRoom"
+        android:gravity="center_horizontal|center"
+        android:textAlignment="center"
+        android:layout_width = "483dp"
+        android:layout_height="205dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/imgKITCHEN"
+        android:background="@drawable/ic_lugares2_living_room"
+        android:tag="imgLIVINGROOM"
+        />
+
+    <TextView
+        android:id="@+id/imgBATH"
+        android:text="Bathroom"
+        android:gravity="center_horizontal|center"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:layout_width = "114dp"
+        android:layout_height="164dp"
+        android:background="@drawable/ic_lugares2_bathroom"
+        android:layout_toRightOf="@id/imgKITCHEN"
+        android:tag="imgBATH"/>
+    <TextView
+        android:id="@+id/imgCORRIDOR"
+        android:text="Corridor"
+        android:gravity="center_horizontal|center"
+        android:textAlignment="center"
+        android:layout_width = "164dp"
+        android:layout_height="124dp"
+        android:layout_margin="0dp"
+        android:background="@drawable/ic_lugares2_corridor"
+        android:layout_toRightOf="@id/imgLIVINGROOM"
+        android:layout_below="@id/imgKITCHEN"
+        android:tag="imgCORRIDOR"/>
+    <TextView
+        android:id="@+id/imgBED1"
+        android:text="Bedroom 1"
+        android:gravity="center_horizontal|center"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_lugares2_bedroom1"
+        android:layout_width="164dp"
+        android:layout_height="285dp"
+        android:layout_toRightOf="@id/imgCORRIDOR"
+        android:tag="imgBED1"
+        />
+    <TextView
+        android:text="Bedroom 2"
+        android:textAlignment="center"
+        android:gravity="center_horizontal|center"
+        android:id="@+id/imgBED2"
+        android:layout_width="235dp"
+        android:layout_height="164dp"
+        android:background="@drawable/ic_lugares2_bedroom2"
+        android:layout_toRightOf="@id/imgLIVINGROOM"
+        android:layout_below="@id/imgCORRIDOR"
+        android:tag="imgBED2"
+         />
+
+    <TextView
+        android:text="Front Yard"
+        android:gravity="bottom|center"
+        android:id="@+id/imgFRONT"
+        android:layout_width="481dp"
+        android:layout_height="78dp"
+        android:background="@drawable/ic_lugares2_front_yard"
+        android:layout_toLeftOf="@id/imgBED2"
+        android:layout_below="@id/imgLIVINGROOM"
+        android:tag="imgFRONT"
+        />
+
+
+    <ImageView
+        android:id="@+id/frontcam"
+        android:layout_width="52dp"
+        android:layout_height="42dp"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgBED2"
+        android:scrollbarTrackVertical="@drawable/sensor_porta_off"
+        android:src="@drawable/cam_off"
+        android:tag="FRONTYARD_OFF">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/frontcamon"
+        android:visibility="invisible"
+        android:layout_width="52dp"
+        android:layout_height="42dp"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgBED2"
+        android:scrollbarTrackVertical="@drawable/sensor_porta_off"
+        android:src="@drawable/cam_on"
+        android:tag="FRONTYARD_ON">
+
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/frontlamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/frontcam"
+        android:tag="FRONTYARD_OFF">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/frontlampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/frontcam"
+        android:tag="FRONTYARD_ON">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/frontsp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/frontlamp"
+        android:tag="FRONTYARD_OFF">
+
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/frontspon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/frontlamp"
+        android:tag="FRONTYARD_ON">
+
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/frontdoor"
+        android:layout_width="52dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/sensor_porta_off"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:tag="FRONTYARD_OFF"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/frontdooron"
+        android:visibility="invisible"
+        android:layout_width="52dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/sensor_porta_on"
+        android:layout_below="@+id/imgLIVINGROOM"
+        android:tag="FRONTYARD_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bed2lamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgCORRIDOR"
+        android:tag="BEDROOM2_OFF"
+        >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bed2lampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgCORRIDOR"
+        android:tag="BEDROOM2_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bed2sp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgCORRIDOR"
+        android:tag="BEDROOM2_OFF"
+        >
+    </ImageView>
+    <ImageView
+        android:id="@+id/bed2spon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgCORRIDOR"
+        android:tag="BEDROOM2_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/corridorlamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgKITCHEN"
+        android:tag="CORRIDOR_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/corridorlampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgKITCHEN"
+        android:tag="CORRIDOR_ON"
+        >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/corridorsp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgKITCHEN"
+        android:tag="CORRIDOR_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/corridorspon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_toRightOf="@+id/imgLIVINGROOM"
+        android:layout_below="@id/imgKITCHEN"
+        android:tag="CORRIDOR_ON"
+        >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bathlamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_toRightOf="@+id/bathsp"
+        android:tag="BATHROOM_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/bathlampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_toRightOf="@+id/bathsp"
+        android:tag="BATHROOM_ON"
+        >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bathsp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_toRightOf="@+id/imgKITCHEN"
+        android:layout_above="@id/imgCORRIDOR"
+        android:tag="BATHROOM_OFF"
+        >
+    </ImageView>
+    <ImageView
+        android:id="@+id/bathspon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_toRightOf="@+id/imgKITCHEN"
+        android:layout_above="@id/imgCORRIDOR"
+        android:tag="BATHROOM_ON"
+        >
+
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/bed1lamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_toRightOf="@+id/imgBATH"
+        android:tag="BEDROOM1_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/bed1lampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_toRightOf="@+id/imgBATH"
+        android:tag="BEDROOM1_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/bed1sp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_below="@id/imgBATH"
+        android:layout_toRightOf="@+id/imgCORRIDOR"
+        android:tag="BEDROOM1_OFF"
+        >
+
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/bed1spon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_below="@id/imgBATH"
+        android:layout_toRightOf="@+id/imgCORRIDOR"
+        android:tag="BEDROOM1_ON"
+        >
+
+    </ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/livinglamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_above="@id/imgBED2"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="LIVINGROOM_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/livinglampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_above="@id/imgBED2"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="LIVINGROOM_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/livingsp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_below="@id/imgKITCHEN"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="LIVINGROOM_OFF"
+        >
+
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/livingspon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_below="@id/imgKITCHEN"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="LIVINGROOM_ON"
+        >
+
+    </ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/kitchenlamp"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/ic_planta_lamp_off"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="KITCHEN_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/kitchenlampon"
+        android:visibility="invisible"
+        android:layout_width="31dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/ic_planta_lamp_on"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="KITCHEN_ON"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/kitchensp"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/ic_planta_presence_off"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="KITCHEN_OFF"
+        >
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/kitchenspon"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/ic_planta_presence_on"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/imgCORRIDOR"
+        android:tag="KITCHEN_ON"
+        >
+
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/kitchengas"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/sensor_gas_off"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/kitchenlamp"
+        android:tag="KITCHEN_OFF"
+        >
+    </ImageView>
+    <ImageView
+        android:id="@+id/kitchengason"
+        android:visibility="invisible"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/sensor_gas_on"
+        android:layout_above="@id/imgLIVINGROOM"
+        android:layout_toLeftOf="@+id/kitchenlamp"
+        android:tag="KITCHEN_ON"
+        >
+    </ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/bathh20"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/sensor_agua_off"
+        android:layout_toRightOf="@+id/bathlamp"
+        android:layout_above="@id/imgCORRIDOR"
+        android:tag="BATHROOM_OFF"
+        >
+
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/bathh20on"
+        android:visibility="invisible"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/sensor_agua_on"
+        android:layout_toRightOf="@+id/bathlamp"
+        android:layout_above="@id/imgCORRIDOR"
+        android:tag="BATHROOM_ON"
+        >
+    </ImageView>
+</RelativeLayout>

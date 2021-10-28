@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: io.webthings:webthing:0.14.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.webthings/webthing/0.14.0/63cc17d0214a1a3d6e39e88a7965886c405a7bd3/webthing-0.14.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.webthings/webthing/0.14.0/51e437d6b405b95c61913fd78c230e8a323a3a81/webthing-0.14.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.webthings/webthing/0.14.0/54b165c0368637f115c4cd55019354b562e43e8c/webthing-0.14.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
