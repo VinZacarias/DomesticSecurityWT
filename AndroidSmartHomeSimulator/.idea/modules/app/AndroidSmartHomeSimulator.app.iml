@@ -4,8 +4,8 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":app" />
-        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="4.2.1" />
-        <option name="LAST_KNOWN_AGP_VERSION" value="4.2.1" />
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="7.0.3" />
+        <option name="LAST_KNOWN_AGP_VERSION" value="7.0.3" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -65,13 +65,21 @@
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-solver:2.0.1" level="project" />
     <orderEntry type="library" name="Gradle: io.webthings:webthing:0.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.everit-org.json-schema:org.everit.json.schema:1.12.1" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20200518" level="project" />
     <orderEntry type="library" name="Gradle: org.nanohttpd:nanohttpd-nanolets:2.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.nanohttpd:nanohttpd-websocket:2.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.nanohttpd:nanohttpd:2.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jmdns:jmdns:3.5.5" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:4.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: commons-validator:commons-validator:1.6" level="project" />
+    <orderEntry type="library" name="Gradle: commons-digester:commons-digester:1.8.1" level="project" />
+    <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Gradle: commons-collections:commons-collections:3.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.damnhandy:handy-uri-templates:2.1.8" level="project" />
+    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.10.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.re2j:re2j:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:7.0.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.navigation:navigation-ui:2.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.material:material:1.2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout:2.0.1@aar" level="project" />

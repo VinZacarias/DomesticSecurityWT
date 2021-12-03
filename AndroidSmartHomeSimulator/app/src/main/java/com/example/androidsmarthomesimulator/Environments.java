@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 public class Environments {
     MainActivity ma;
-    private RelativeLayout rl;
+    private final RelativeLayout rl;
     Environments(RelativeLayout rl, MainActivity ma){
         this.rl = rl;
         this.ma = ma;
@@ -35,13 +35,13 @@ public class Environments {
         }
     }
 
-    private static Hashtable<Status, ArrayList<ImageView>> sensors = new Hashtable();
+    private static final Hashtable<Status, ArrayList<ImageView>> sensors = new Hashtable();
 
     public enum Envs{
         KITCHEN("KITCHEN"), LIVINGROOM("LIVINGROOM"), FRONTYARD("FRONTYARD"),
         BATHROOM("BATHROOM"), CORRIDOR("CORRIDOR"), BEDROOM1("BEDROOM1"),
         BEDROOM2("BEDROOM2");
-        private String envs;
+        private final String envs;
 
         Envs(String envs){
             this.envs = envs;
@@ -54,7 +54,7 @@ public class Environments {
         BEDROOM2_ON("BEDROOM2_ON"), KITCHEN_OFF("KITCHEN_OFF"), LIVINGROOM_OFF("LIVINGROOM_OFF"),
         FRONTYARD_OFF("FRONTYARD_OFF"), BATHROOM_OFF("BATHROOM_OFF"), CORRIDOR_OFF("CORRIDOR_OFF"),
         BEDROOM1_OFF("BEDROOM1_OFF"), BEDROOM2_OFF("BEDROOM2_OFF");
-        private String status;
+        private final String status;
 
         Status(String status){
             this.status = status;

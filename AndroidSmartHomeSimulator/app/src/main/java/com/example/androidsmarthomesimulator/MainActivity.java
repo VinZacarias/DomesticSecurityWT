@@ -3,13 +3,16 @@ package com.example.androidsmarthomesimulator;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +32,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
+
+import io.webthings.webthing.Thing;
+import io.webthings.webthing.WebThingServer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,20 +45,25 @@ public class MainActivity extends AppCompatActivity {
     private int xpixel = 0;
     private int ypixel = 0;
     Environments environments;
-
+    private WebThingServer server;
 
     //1080x2340 pixels
     //1221x2211
 //    private int LIMITX = 804; //dp
 //    private int LIMITy = 444; //dp
-    private int LIMITX = 804; //dp
-    private int LIMITy = 444; //dp
+    private final int LIMITX = 804; //dp
+    private final int LIMITy = 444; //dp
 
 
     private float factor = 0;
+    private Log log;
+    Thing MotionSensor = new MultipleThings.MotionSensor();
+    Thing Camera = new MultipleThings.Camera();
+    Thing DoorSensor = new MultipleThings.DoorSensor();
+    Thing WindowSensor = new MultipleThings.WindowSensor();
+    Thing Siren = new MultipleThings.Siren();
 
-
-
+    @SuppressLint("WrongThread")
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +72,55 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        layout = (RelativeLayout)findViewById(R.id.rlmain);
+        layout = findViewById(R.id.rlmain);
         environments = new Environments(layout, this);
         full_screen();
         getDIsplayInfo();
         setViews();
         addClickBehavior();
+    }
+
+    /**
+     *  Start web thing server when app is resumed.
+     */
+    public void onResume() {
+        super.onResume();
+        try {
+             List<Thing> things = new ArrayList<>();
+             // modelo de adição de things: things.add(sensor);
+             things.add(MotionSensor);
+             things.add(Camera);
+             things.add(DoorSensor);
+             things.add(WindowSensor);
+             things.add(Siren);
+
+             WebThingServer server =
+                new WebThingServer(new WebThingServer.MultipleThings(things, "HomeSecuritySystem"), 8888);
+             Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+             server.start();
+        } catch (IOException e) {
+            log.d("my tag","Failed to instantiate Web Thing Server");
+        }
+    }
+
+    /**
+     *  Stop web thing server when app is paused.
+     */
+    public void onPause() {
+        super.onPause();
+        if(server != null) {
+            server.stop();
+        }
+    }
+
+    /**
+     *  Stop web thing server when app is destroyed.
+     */
+    public void onDestroy() {
+        super.onDestroy();
+        if(server != null) {
+            server.stop();
+        }
     }
 
     private void full_screen(){
@@ -114,46 +169,82 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addClickBehavior(){
-        ((View)findViewById(R.id.imgBATH)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgBATH).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BATHROOM);
+                /*
+
+                MotionSensor.altValor();
+                DoorSensor.altValor();
+
+                 */
             }
         });
-        ((View)findViewById(R.id.imgLIVINGROOM)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgLIVINGROOM).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.LIVINGROOM);
+                 /*
+
+                MotionSensor.altValor();
+                DoorSensor.altValor();
+
+                 */
             }
         });
-        ((View)findViewById(R.id.imgKITCHEN)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgKITCHEN).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.KITCHEN);
+
+                /*
+
+                MotionSensor.altValor();
+                WindowSensor.altValor();
+
+                 */
             }
         });
-        ((View)findViewById(R.id.imgFRONT)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgFRONT).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.FRONTYARD);
             }
         });
-        ((View)findViewById(R.id.imgCORRIDOR)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgCORRIDOR).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.CORRIDOR);
+                /*
+
+                MotionSensor.altValor();
+
+                 */
             }
         });
-        ((View)findViewById(R.id.imgBED1)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgBED1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BEDROOM1);
+                /*
+
+                MotionSensor.altValor();
+                WindowSensor.altValor();
+
+                 */
             }
         });
-        ((View)findViewById(R.id.imgBED2)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgBED2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BEDROOM2);
+                /*
+
+                MotionSensor.altValor();
+                WindowSensor.altValor();
+
+                 */
             }
         });
     }

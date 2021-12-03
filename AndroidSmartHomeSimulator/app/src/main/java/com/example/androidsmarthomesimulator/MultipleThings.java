@@ -1,4 +1,7 @@
 package com.example.androidsmarthomesimulator;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,16 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import io.webthings.webthing.Action;
-import io.webthings.webthing.Event;
 import io.webthings.webthing.Property;
 import io.webthings.webthing.Thing;
 import io.webthings.webthing.Value;
 import io.webthings.webthing.WebThingServer;
 import io.webthings.webthing.errors.PropertyError;
-import java.util.Random;
 
 /*
 	Uso do exemplo MultipleThings para criação de um sistema de segurança doméstica.
@@ -24,44 +24,19 @@ import java.util.Random;
 */
 
 public class MultipleThings {
-    public static void main(String[] args) {
-        Thing MotionSensor = new MotionSensor();
-        Thing Camera = new Camera();
-        Thing DoorSensor = new DoorSensor();
-        Thing WindowSensor = new WindowSensor();
-        Thing Siren = new Siren();
+    private Log log;
+    Thing MotionSensor = new MotionSensor();
+    Thing Camera = new Camera();
+    Thing DoorSensor = new DoorSensor();
+    Thing WindowSensor = new WindowSensor();
+    Thing Siren = new Siren();
 
-        try {
-            List<Thing> things = new ArrayList<>();
-            // modelo de adição de things: things.add(sensor);
-            things.add(MotionSensor);
-            things.add(Camera);
-            things.add(DoorSensor);
-            things.add(WindowSensor);
-            things.add(Siren);
-
-            // If adding more than one thing, use MultipleThings() with a name.
-            // In the single thing case, the thing's name will be broadcast.
-            WebThingServer server =
-                    new WebThingServer(new WebThingServer.MultipleThings(things,
-                            "HomeSecuritySystem"),
-                            8888);
-
-            Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
-
-            server.start(false);
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.exit(1);
-        }
-    }
-
-    public static class MotionSensor extends Thing {
+    static class MotionSensor extends Thing {
         //https://github.com/KrzysztofZurek1973/webthing-motion-sensor exemplo de sensor de movimento pela WebThings
         private Value MotionDetected;
         private Value Counter;
         private int i = 0;
-        private Siren s;
+        private Log log;
         public MotionSensor() {
             super("urn:dev:ops:motion-sensor-1",
                     "My Motion Sensor",
@@ -75,18 +50,12 @@ public class MultipleThings {
                 onDescription.put("type", "boolean");
                 onDescription.put("description", "Whether the sensor is turned on");
 
-                Value<Boolean> on = new Value<>(true,
-                        // Here, you could send a signal to
-                        // the GPIO that switches the lamp
-                        // off
-                        v -> System.out.printf(
-                                "On-State is now %s\n",
-                                v));
+                Value<Boolean> on = new Value<>(true);
 
                 this.addProperty(new Property(this, "on", on, onDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -102,7 +71,7 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Status", MotionDetected, motionDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -118,7 +87,7 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Alarm Counter", Counter, counterDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -128,12 +97,11 @@ public class MultipleThings {
                         Thread.sleep(30000);
                         boolean currentStatus = this.readFromStatus();
                         if (currentStatus == true) {
-                            System.out.printf("setting sensor status to: true\n");
+                            log.d("my tag","setting sensor status to: true");
                             this.Counter.notifyOfExternalUpdate(updateValue());
-                            System.out.printf("setting sensor counter to: " + i +"\n");
-                            s.setAlarm();
+                            log.d("my tag","setting sensor counter to: " + i +"\n");
                         }
-                        else System.out.printf("setting sensor status to: false\n");
+                        else log.d("my tag","setting sensor status to: false\n");
                         this.MotionDetected.notifyOfExternalUpdate(currentStatus);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -145,17 +113,28 @@ public class MultipleThings {
         private boolean readFromStatus() {
             double max = 0.8;
             double valor = Math.random();
-            if(valor>=max) return true;
-            else return false;
+            return valor >= max;
         }
 
         private int updateValue() {
             i++;
             return (Integer.valueOf(i));
         }
+
+        private void altValor(boolean value){
+            if (value == true) {
+                log.d("my tag","setting sensor status to: true");
+                this.Counter.notifyOfExternalUpdate(updateValue());
+                log.d("my tag","setting sensor counter to: " + i +"\n");
+            }
+            else log.d("my tag","setting sensor status to: false\n");
+            this.MotionDetected.notifyOfExternalUpdate(value);
+        }
     }
 
-    public static class Camera extends Thing {
+
+    static class Camera extends Thing {
+        private Log log;
         public Camera() {
             super("urn:dev:ops:camera-1",
                     "My Camera",
@@ -169,15 +148,12 @@ public class MultipleThings {
                 onDescription.put("type", "boolean");
                 onDescription.put("description", "Whether the camera is turned on");
 
-                Value<Boolean> on = new Value<>(true,
-                        v -> System.out.printf(
-                                "On-State is now %s\n",
-                                v));
+                Value<Boolean> on = new Value<>(true);
 
                 this.addProperty(new Property(this, "on", on, onDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -189,18 +165,18 @@ public class MultipleThings {
                 imageDescription.put("description", "Displays the camera's image");
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
         }
     }
 
-    public static class DoorSensor extends Thing{
+    static class DoorSensor extends Thing{
         //https://github.com/KrzysztofZurek1973/webthing-door-sensor exemplo de sensor de movimento pela WebThings
         private Value MotionDetected;
         private Value Counter;
         private int i = 0;
-
+        private Log log;
         public DoorSensor() {
             super("urn:dev:ops:door-sensor-1",
                     "My Door Sensor",
@@ -214,14 +190,11 @@ public class MultipleThings {
                 onDescription.put("type", "boolean");
                 onDescription.put("description", "Whether the sensor is turned on");
 
-                Value<Boolean> on = new Value<>(true,
-                        v -> System.out.printf(
-                                "On-State is now %s\n",
-                                v));
+                Value<Boolean> on = new Value<>(true);
                 this.addProperty(new Property(this, "on", on, onDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -238,7 +211,7 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Status", MotionDetected, motionDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -254,7 +227,7 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Alarm Counter", Counter, counterDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -264,11 +237,11 @@ public class MultipleThings {
                         Thread.sleep(60000);
                         boolean currentStatus = this.readFromStatus();
                         if (currentStatus == true) {
-                            System.out.printf("setting Door Sensor status to: true\n");
+                            log.d("my tag","setting Door Sensor status to: true\n");
                             this.Counter.notifyOfExternalUpdate(updateValue());
-                            System.out.printf("setting sensor counter to: " + i +"\n");
+                            log.d("my tag","setting sensor counter to: " + i +"\n");
                         }
-                        else System.out.printf("setting Door Sensor status to: false\n");
+                        else log.d("my tag","setting Door Sensor status to: false\n");
                         this.MotionDetected.notifyOfExternalUpdate(currentStatus);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -280,8 +253,7 @@ public class MultipleThings {
         private boolean readFromStatus() {
             double max = 0.8;
             double valor = Math.random();
-            if(valor>=max) return true;
-            else return false;
+            return valor >= max;
         }
 
         private int updateValue() {
@@ -290,11 +262,11 @@ public class MultipleThings {
         }
     }
 
-    public static class WindowSensor extends Thing{
+    static class WindowSensor extends Thing{
         private Value MotionDetected;
         private Value Counter;
         private int i = 0;
-
+        private Log log;
         public WindowSensor() {
             super("urn:dev:ops:window-sensor-1",
                     "My Window Sensor",
@@ -308,14 +280,11 @@ public class MultipleThings {
                 onDescription.put("type", "boolean");
                 onDescription.put("description", "Whether the sensor is turned on");
 
-                Value<Boolean> on = new Value<>(true,
-                        v -> System.out.printf(
-                                "On-State is now %s\n",
-                                v));
+                Value<Boolean> on = new Value<>(true);
                 this.addProperty(new Property(this, "on", on, onDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -333,7 +302,7 @@ public class MultipleThings {
 
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -348,7 +317,7 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Alarm Counter", Counter, counterDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -358,11 +327,11 @@ public class MultipleThings {
                         Thread.sleep(60000);
                         boolean currentStatus = this.readFromStatus();
                         if (currentStatus == true) {
-                            System.out.printf("setting Door Sensor status to: true\n");
+                            log.d("my tag","setting Door Sensor status to: true\n");
                             this.Counter.notifyOfExternalUpdate(updateValue());
-                            System.out.printf("setting sensor counter to: " + i +"\n");
+                            log.d("my tag","setting sensor counter to: " + i +"\n");
                         }
-                        else System.out.printf("setting Window Sensor status to: false\n");
+                        else log.d("my tag","setting Window Sensor status to: false\n");
                         this.MotionDetected.notifyOfExternalUpdate(currentStatus);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -374,8 +343,7 @@ public class MultipleThings {
         private boolean readFromStatus() {
             double max = 0.8;
             double valor = Math.random();
-            if(valor>=max) return true;
-            else return false;
+            return valor >= max;
         }
 
         private int updateValue() {
@@ -384,9 +352,9 @@ public class MultipleThings {
         }
     }
 
-    public static class Siren extends Thing{
+    static class Siren extends Thing{
         private Value<Boolean> Triggered;
-
+        private Log log;
         public Siren() {
             super("urn:dev:ops:siren-1",
                     "My Siren",
@@ -400,14 +368,11 @@ public class MultipleThings {
                 onDescription.put("type", "boolean");
                 onDescription.put("description", "Whether the siren is turned on");
 
-                Value<Boolean> on = new Value<>(true,
-                        v -> System.out.printf(
-                                "On-State is now %s\n",
-                                v));
+                Value<Boolean> on = new Value<>(true);
                 this.addProperty(new Property(this, "on", on, onDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
 
@@ -425,25 +390,9 @@ public class MultipleThings {
                 this.addProperty(new Property(this, "Status", Triggered, alarmDescription));
             }
             catch (JSONException e) {
-                System.out.println(e.toString());
+                log.d("my tag",e.toString());
                 System.exit(1);
             }
-        }
-
-        public void setAlarm() {
-            boolean sim = true;
-            boolean nao = false;
-            this.Triggered.notifyOfExternalUpdate(sim);
-            System.out.println("The siren has been activated");
-            try{
-                Thread.sleep(10000);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
-            this.Triggered.notifyOfExternalUpdate(nao);
-            System.out.println("The siren has been deactivated");
         }
     }
 }
