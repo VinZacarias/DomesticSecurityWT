@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import io.webthings.webthing.Action;
 import io.webthings.webthing.Property;
@@ -37,6 +38,7 @@ public class MultipleThings {
         private Value Counter;
         private int i = 0;
         private Log log;
+
         public MotionSensor() {
             super("urn:dev:ops:motion-sensor-1",
                     "My Motion Sensor",
@@ -77,7 +79,7 @@ public class MultipleThings {
 
             try{
                 JSONObject counterDescription = new JSONObject();
-                counterDescription.put("@type", "LevelProperty"); //arrumar para uma propriedade de contagem.
+                counterDescription.put("@type", "LevelProperty");
                 counterDescription.put("title", "AlarmCounter");
                 counterDescription.put("type", "Integer");
                 counterDescription.put("description", "Registers how many times the sensor has registered an event");
@@ -91,6 +93,26 @@ public class MultipleThings {
                 System.exit(1);
             }
 
+            //thread estática que trabalha com referências a variáveis booleanas
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        Thread.sleep(30000);
+                        boolean currentStatus =  MainActivity.getInstance().getSensorStatus(0);
+                        if (currentStatus == true) {
+                            log.d("my tag","setting Motion Sensor status to: true");
+                            this.Counter.notifyOfExternalUpdate(updateValue());
+                            log.d("my tag","setting Motion Sensor counter to: " + i +"\n");
+                        }
+                        else log.d("my tag","setting Motion Sensor status to: false\n");
+                        this.MotionDetected.notifyOfExternalUpdate(currentStatus);
+                    } catch (InterruptedException e) {
+                        throw new IllegalStateException(e);
+                    }
+                }
+            }).start();
+
+            /*Thread de simulação automática de interações.
             new Thread(() -> {
                 while (true) {
                     try {
@@ -107,7 +129,7 @@ public class MultipleThings {
                         throw new IllegalStateException(e);
                     }
                 }
-            }).start();
+            }).start();*/
         }
 
         private boolean readFromStatus() {
@@ -120,18 +142,7 @@ public class MultipleThings {
             i++;
             return (Integer.valueOf(i));
         }
-
-        private void altValor(boolean value){
-            if (value == true) {
-                log.d("my tag","setting sensor status to: true");
-                this.Counter.notifyOfExternalUpdate(updateValue());
-                log.d("my tag","setting sensor counter to: " + i +"\n");
-            }
-            else log.d("my tag","setting sensor status to: false\n");
-            this.MotionDetected.notifyOfExternalUpdate(value);
-        }
     }
-
 
     static class Camera extends Thing {
         private Log log;
@@ -231,6 +242,26 @@ public class MultipleThings {
                 System.exit(1);
             }
 
+            //thread estática que trabalha com referências a variáveis booleanas
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        Thread.sleep(30000);
+                        boolean currentStatus =  MainActivity.getInstance().getSensorStatus(1);
+                        if (currentStatus == true) {
+                            log.d("my tag","setting Door Sensor status to: true");
+                            this.Counter.notifyOfExternalUpdate(updateValue());
+                            log.d("my tag","setting Door Sensor counter to: " + i +"\n");
+                        }
+                        else log.d("my tag","setting Door Sensor status to: false\n");
+                        this.MotionDetected.notifyOfExternalUpdate(currentStatus);
+                    } catch (InterruptedException e) {
+                        throw new IllegalStateException(e);
+                    }
+                }
+            }).start();
+
+            /*Thread de simulação automática de interações.
             new Thread(() -> {
                 while (true) {
                     try {
@@ -247,7 +278,7 @@ public class MultipleThings {
                         throw new IllegalStateException(e);
                     }
                 }
-            }).start();
+            }).start();*/
         }
 
         private boolean readFromStatus() {
@@ -321,6 +352,26 @@ public class MultipleThings {
                 System.exit(1);
             }
 
+            //thread estática que trabalha com referências a variáveis booleanas
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        Thread.sleep(30000);
+                        boolean currentStatus =  MainActivity.getInstance().getSensorStatus(2);
+                        if (currentStatus == true) {
+                            log.d("my tag","setting Window Sensor status to: true");
+                            this.Counter.notifyOfExternalUpdate(updateValue());
+                            log.d("my tag","setting Window Sensor counter to: " + i +"\n");
+                        }
+                        else log.d("my tag","setting Window Sensor status to: false\n");
+                        this.MotionDetected.notifyOfExternalUpdate(currentStatus);
+                    } catch (InterruptedException e) {
+                        throw new IllegalStateException(e);
+                    }
+                }
+            }).start();
+
+            /*Thread de simulação automática de interações.
             new Thread(() -> {
                 while (true) {
                     try {
@@ -337,7 +388,7 @@ public class MultipleThings {
                         throw new IllegalStateException(e);
                     }
                 }
-            }).start();
+            }).start();*/
         }
 
         private boolean readFromStatus() {

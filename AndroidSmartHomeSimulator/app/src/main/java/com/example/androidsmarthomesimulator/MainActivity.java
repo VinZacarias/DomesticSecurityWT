@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,7 +46,12 @@ public class MainActivity extends AppCompatActivity {
     private int xpixel = 0;
     private int ypixel = 0;
     Environments environments;
+    private static MainActivity instance;
     private WebThingServer server;
+    private boolean MSstatus = false;
+    private boolean DSstatus = false;
+    private boolean WSstatus = false;
+
 
     //1080x2340 pixels
     //1221x2211
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         getDIsplayInfo();
         setViews();
         addClickBehavior();
+        instance = this;
     }
 
     /**
@@ -93,9 +100,8 @@ public class MainActivity extends AppCompatActivity {
              things.add(DoorSensor);
              things.add(WindowSensor);
              things.add(Siren);
-
              WebThingServer server =
-                new WebThingServer(new WebThingServer.MultipleThings(things, "HomeSecuritySystem"), 8888);
+                new WebThingServer(new WebThingServer.MultipleThings(things, "HomeSecuritySystem"), 8080);
              Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
              server.start();
         } catch (IOException e) {
@@ -173,37 +179,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BATHROOM);
-                /*
-
-                MotionSensor.altValor();
-                DoorSensor.altValor();
-
-                 */
+                if(WSstatus == true){
+                    WSstatus = false;
+                }
+                else{
+                    WSstatus = true;
+                }
             }
         });
         findViewById(R.id.imgLIVINGROOM).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.LIVINGROOM);
-                 /*
-
-                MotionSensor.altValor();
-                DoorSensor.altValor();
-
-                 */
+                if(MSstatus == true){
+                    MSstatus = false;
+                }
+                else{
+                    MSstatus = true;
+                }
             }
         });
         findViewById(R.id.imgKITCHEN).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.KITCHEN);
-
-                /*
-
-                MotionSensor.altValor();
-                WindowSensor.altValor();
-
-                 */
+                if(WSstatus == true){
+                    WSstatus = false;
+                }
+                else{
+                    WSstatus = true;
+                }
             }
         });
         findViewById(R.id.imgFRONT).setOnClickListener(new View.OnClickListener() {
@@ -216,36 +221,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.CORRIDOR);
-                /*
-
-                MotionSensor.altValor();
-
-                 */
             }
         });
         findViewById(R.id.imgBED1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BEDROOM1);
-                /*
-
-                MotionSensor.altValor();
-                WindowSensor.altValor();
-
-                 */
+                if(DSstatus == true){
+                    DSstatus = false;
+                }
+                else{
+                    DSstatus = true;
+                }
             }
         });
         findViewById(R.id.imgBED2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 environments.changeVisibility(Environments.Envs.BEDROOM2);
-                /*
-
-                MotionSensor.altValor();
-                WindowSensor.altValor();
-
-                 */
+                if(DSstatus == true){
+                    DSstatus = false;
+                }
+                else{
+                    DSstatus = true;
+                }
             }
         });
+    }
+
+    public boolean getSensorStatus(int i){
+        if(i == 0) return MSstatus;
+        if(i == 1) return DSstatus;
+        else return WSstatus;
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
     }
 }
